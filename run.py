@@ -35,12 +35,12 @@ def find_best(top_n=1):
     best_coordinates = best_coordinates[:top_n]
 
     result = []
-    for (coordinates, distance) in best_coordinates:
+    for (coordinates, _) in best_coordinates:
         result.append(coordinates)
 
     return result
 
-print(find_best(5))
+print(find_best())
 
 # def coordinates_to_continent(lat, long):
 #     try: 
