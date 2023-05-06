@@ -7,6 +7,9 @@ from pycountry_convert import country_alpha2_to_continent_code, country_name_to_
 from global_land_mask import globe
 
 from geopy.geocoders import Nominatim
+
+import webbrowser
+
 geolocator = Nominatim(user_agent="wolfhacks")
 
 from train import Model
@@ -40,39 +43,7 @@ def find_best(top_n=1):
 
     return result
 
-print(find_best())
-
-# def coordinates_to_continent(lat, long):
-#     try: 
-#         country = geolocator.reverse([lat, long]).raw['address']['country']
-#     except:
-#         country = 'Unknown'
-#     try:
-#         cn_a2_code =  country_name_to_country_alpha2(country)
-#     except:
-#         cn_a2_code = 'Unknown' 
-#     try:
-#         cn_continent = country_alpha2_to_continent_code(cn_a2_code)
-#     except:
-#         cn_continent = 'Unknown' 
-#     return cn_continent
-
-# def find_best_per_continent(continent):
-#     best = 500
-#     for lat in tqdm(range(-90, 91)):
-#         for long in range(-180, 181):
-#             if globe.is_land(lat, long):
-#                 if coordinates_to_continent(lat, long) == continent:
-#                     disasters = predict(lat, long)
-#                     if disasters < best:
-#                         best = disasters
-
-#     ret = []
-#     for lat in tqdm(range(-90, 91)):
-#         for long in range(-180, 181):
-#             if globe.is_land(lat, long):
-#                 if coordinates_to_continent(lat, long) == continent:
-#                     disasters = predict(lat, long)
-#                     if disasters == best:
-#                         ret = [lat, long]
-#     return ret
+result = find_best()
+lat, long = result[0]
+print(lat, long)
+webbrowser.open(f"https://www.google.com/maps/place/{abs(lat)}%C2%B000'00.0%22{'S' if lat <= 0 else 'N'}+{abs(long)}%C2%B000'00.0%22{'W' if long <= 0 else 'E'}/@{lat},{long},17z/")
